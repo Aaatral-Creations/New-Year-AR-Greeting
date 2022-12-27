@@ -1,0 +1,23 @@
+{
+  "name": "new-year-ar-greeting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aaatral-Creations/New-Year-AR-Greeting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aaatral-Creations/New-Year-AR-Greeting/issues"
+  },
+  "homepage": "https://github.com/Aaatral-Creations/New-Year-AR-Greeting#readme",
+  "dependencies": {
+    "gh-pages": "^4.0.0"
+  }
+}
