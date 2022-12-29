@@ -22,7 +22,7 @@ class ARButton {
 				overlay.appendChild(svg);
 
 				const img = document.createElement("img");
-				//img.src = "./textures/logo.png";
+				img.src = "./textures/logo.png";
 				img.id = "logo_NI";
 				overlay.appendChild(img);
 
