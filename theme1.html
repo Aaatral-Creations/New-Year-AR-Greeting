@@ -35,7 +35,6 @@
 	</script>
 
 	<script type="module">
-
 		import * as THREE from 'three';
 
 		import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -45,17 +44,15 @@
 
 		import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
-		//TextS
 		import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 		import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-		import { AmbientLight } from 'three';
 
 		let textMesh1, textMesh2, textGeo, textMaterials;
 		let text = 'HAPPY NEW \n YEAR  2023',
 			bevelEnabled = true,
 			font = undefined,
-			fontName = 'gentilis', // helvetiker, optimer, gentilis, droid sans, droid serif
-			fontWeight = 'bold'; // normal bold
+            fontName = 'Pathout_Regular', 
+			fontWeight = 'bold'; 
 
 		const height = 0.0001,
 			size = 0.25,
@@ -67,8 +64,7 @@
 		const mirror = false;
 
 		let fbxLoader;
-
-		let stats, parameters;
+		let parameters;
 		const materials = [];
 
 		let container;
@@ -82,22 +78,19 @@
 
 		let group;
 		let balloon, star, snow, bell1, bell2;
-		let colorThemeSelection = 0;
+		let colorThemeSelection = 1;
 		let snowflake = true;
-		let isSnowParticleEffect = false;
+		let isSnowParticleEffect = true;
 
-		const API = {
-			background_color: 0x000000,
-			changeColor: function () {
-				ChangeBackgroundColor();
-			},
-			background_AR: function () {
-				RemoveBackground();
+		const API = {		
+			changeTheme: function () {
+				openThemePages();
 			}
 		};
 
 		const ColorPalatte = {
-			patetteId: 0,
+			paletteId: 0,
+			paletteName: undefined,
 			background_color: 0x000000,
 			primary_color: 0x000000,
 			secondary_color: 0x000000,
@@ -111,8 +104,8 @@
 		const addAudioListenerToCamera = (camera) => {
 			if (!isAudioPlaying) {
 				isAudioPlaying = true;
-				AudioPlayer();
-			}
+                AudioPlayer();
+            }
 		};
 
 		let particleSpriteLocation = "./textures/sprites/snowflake/";
@@ -126,15 +119,15 @@
 			container = document.createElement('div');
 			document.body.appendChild(container);
 
-			ColorThemeSetter(colorThemeSelection);//Set color there to 0
+			ColorThemeSetter(colorThemeSelection);
 
 			scene = new THREE.Scene();
 
 			camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
 			camera.position.set(0, 0, 3);
 
-			document.addEventListener("click", () => {
-				addAudioListenerToCamera(camera);
+            document.addEventListener("click", () => {
+                addAudioListenerToCamera(camera);
 			});
 
 			const controls = new OrbitControls(camera, container);
@@ -158,13 +151,9 @@
 
 			loadFont();
 
-			// model
 			fbxLoader = new FBXLoader();
 			fbxLoader.load('models/newyear/fbx/balloon/Balloon.fbx', function (object) {
 				balloon = object;
-				//object.scale.setScalar(getRandomFloat(0.35, 0.6));
-				//object.position.z = -1;
-				//scene.add(object);
 			});
 
 			fbxLoader = new FBXLoader();
@@ -188,9 +177,7 @@
 				bell2 = object;
 			});
 
-			//model
 			const geometries = [
-				//new THREE.ConeGeometry(0.2, 0.2, 64),
 				new THREE.IcosahedronGeometry(0.2, 8)
 			];
 
@@ -225,7 +212,6 @@
 					createClones(randomValue, i);
 				}
 			}
-			//
 
 			renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 			renderer.setPixelRatio(window.devicePixelRatio);
@@ -250,18 +236,7 @@
 			raycaster = new THREE.Raycaster();
 
 			const gui = new GUI();
-
-			gui.addColor(API, 'background_color')
-				.listen()
-				.onChange(function () {
-					scene.background = new THREE.Color(API.background_color);//.convertSRGBToLinear();
-					//mesh.material.color.set(API.background-color).convertSRGBToLinear();
-					render();
-
-				});
-
-			gui.add(API, 'background_AR').name('AR Background');
-			gui.add(API, 'changeColor').name('Change background color');
+			gui.add(API, 'changeTheme').name('Change Theme');
 
 			window.addEventListener('resize', onWindowResize);
 		}
@@ -283,7 +258,6 @@
 			switch (value) {
 				case 0:
 					const materialFbx = new THREE.MeshStandardMaterial({
-						//color: Math.random() * 0x6Effff,
 						color: getRandomBalloonColor(),
 						opacity: 0.9,
 						transparent: true,
@@ -296,6 +270,7 @@
 						newObject.position.x = Math.random() * 8 - 4;
 						newObject.position.y = Math.random() * 8 - 4;
 						newObject.position.z = Math.random() * 8 - 4;
+
 						newObject.rotation.x = Math.random() * 2 * Math.PI;
 						newObject.rotation.y = Math.random() * 2 * Math.PI;
 
@@ -431,14 +406,14 @@
 			// This will create a loop rendering at each frame
 			requestAnimationFrame(animateParticles);
 			render();
+
 		}
 
 		function render() {
-
-			let time = Date.now() * 0.00002;
+            let time = Date.now() * 0.00002;
 
 			if (isSnowParticleEffect) {
-				time = Date.now() * 0.00002;
+                time = Date.now() * 0.00002;
 				for (let i = 0; i < scene.children.length; i++) {
 					const object = scene.children[i];
 
@@ -454,25 +429,24 @@
 				}
 			}
 			else {
-				time = Date.now() * 0.00001;
+                 time = Date.now() * 0.00001;
 
-				for (let i = 0; i < scene.children.length; i++) {
-					const object = scene.children[i];
+                for (let i = 0; i < scene.children.length; i++) {
+                    const object = scene.children[i];
 
 					if (object instanceof THREE.Points) {
 						object.rotation.x = time * (i < 4 ? i + 1 : -(i + 1));
-						object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
-						object.rotation.z = time * (i < 4 ? i + 1 : -(i + 1));
-					}
-				}
-			}
-			//Particles end
+                        object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+                        object.rotation.z = time * (i < 4 ? i + 1 : -(i + 1));
+                    }
+                }
+            }
 
 			//To rotate the 3d models in the group(balloons, stars, sphere etc)
-			for (let i = 0; i < group.children.length; i++) {
-				const object = group.children[i];
-				object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
-			}
+            for (let i = 0; i < group.children.length; i++) {
+                const object = group.children[i];
+                object.rotation.y = time * (i < 4 ? i + 1 : -(i + 1));
+            }
 
 			cleanIntersected();
 
@@ -482,7 +456,6 @@
 			renderer.render(scene, camera);
 		}
 
-		//TextS
 		//To load the font
 		function loadFont() {
 
@@ -497,6 +470,7 @@
 
 		//Creates the new year text model
 		function createText() {
+
 			textMaterials = [
 				new THREE.MeshPhongMaterial({ color: ColorPalatte.text3dForegroundColor, flatShading: true }), // front
 				new THREE.MeshPhongMaterial({ color: ColorPalatte.text3dSideColor }) // side
@@ -573,16 +547,16 @@
 				particleSpriteLocation + "particle1.png"
 			);
 			const sprite2 = textureLoader.load(
-				particleSpriteLocation + "particle2.png"
+                particleSpriteLocation + "particle2.png"
 			);
 			const sprite3 = textureLoader.load(
-				particleSpriteLocation + "particle3.png"
+                particleSpriteLocation + "particle3.png"
 			);
 			const sprite4 = textureLoader.load(
-				particleSpriteLocation + "particle4.png"
+                particleSpriteLocation + "particle4.png"
 			);
 			const sprite5 = textureLoader.load(
-				particleSpriteLocation + "particle5.png"
+                particleSpriteLocation + "particle5.png"
 			);
 
 			// Create the geometry that will hold all our vertices
@@ -644,24 +618,11 @@
 			return particleSystems;
 		}
 
-		function RemoveBackground() {
-			API.background_color = 0x000000;
-			scene.background = null;
-			render();
-		}
-
-		function ChangeBackgroundColor() {
-			const h = Math.floor(getRandomFloat(0, 360));
-			const newColor = "hsl(" + h + ", 100%, 15%)";
-
-			API.background_color = new THREE.Color(newColor);
-			scene.background = API.background_color;
-			render();
-		}
-
 		//Color theme setup based on selection
 		function ColorThemeSetter(theme) {
-            ColorPalatte.patetteId = 0;
+            ColorPalatte.paletteId = 0;
+            colorThemeSelection = ColorPalatte.paletteId;
+            ColorPalatte.paletteName = "Blue_White";
             ColorPalatte.background_color = 0x1d395b;
             ColorPalatte.primary_color = 0x046ec1;
             ColorPalatte.secondary_color = 0x24b9eb;
@@ -669,8 +630,8 @@
             ColorPalatte.text3dSideColor = 0xffffff;
             ColorPalatte.other_color = [0x1d395b, 0x046ec1, 0x24b9eb, 0xffffff];
             particleSpriteLocation = "./textures/sprites/snowflake/";
+            isSnowParticleEffect = true;
 		}
-		
 
 		//Audio player setup and play functionality
 		function AudioPlayer() {
@@ -691,8 +652,18 @@
 				sound.play();
 			});
 		}
+
+		function openThemePages() {
+			if (ColorPalatte.paletteName == "Black_Gold") {
+                location.replace("./theme1.html")
+			}
+			else if (ColorPalatte.paletteName == "Blue_White") {
+                location.replace("./theme2.html")
+			}
+            else if (ColorPalatte.paletteName == "Celebration_Colorful") {
+                location.replace("./")
+            }
+        }
 	</script>
-
-
 </body>
 </html>

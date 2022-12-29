@@ -161,7 +161,7 @@
 				star = object;
 				object.scale.setScalar(0.0001);
 				object.position.x = 0;
-				object.position.y = 0.5;
+				object.position.y = 0.75;
 				object.position.z = -1;
 
 				scene.add(object);
@@ -620,16 +620,16 @@
 
 		//Color theme setup based on selection
 		function ColorThemeSetter(theme) {
-            ColorPalatte.paletteId = 1;
+            ColorPalatte.paletteId = 2;
             colorThemeSelection = ColorPalatte.paletteId;
-            ColorPalatte.paletteName = "Black_Gold";
-            ColorPalatte.background_color = 0xb28a16;
-            ColorPalatte.primary_color = 0x010103;
-            ColorPalatte.secondary_color = 0xb0982b;
-            ColorPalatte.text3dForegroundColor = 0x010103;
-            ColorPalatte.text3dSideColor = 0xb28a16;
-            ColorPalatte.other_color = [0xb28a16, 0x010103, 0xb0982b, 0xedd9a5];
-            particleSpriteLocation = "./textures/sprites/confettigold/";
+            ColorPalatte.paletteName = "Celebration_Colorful";
+            ColorPalatte.background_color = 0x180d1c;
+            ColorPalatte.primary_color = 0xf1a738;
+            ColorPalatte.secondary_color = 0xfade98;
+            ColorPalatte.text3dForegroundColor = "rgb(255, 165, 7)"; //"rgb(255, 207, 66)";
+            ColorPalatte.text3dSideColor = "rgb(150, 120, 1)";
+            ColorPalatte.other_color = [0x8EC7D2, 0x0D6986, 0xDB073D, 0xDBA507];
+            particleSpriteLocation = "./textures/sprites/confetticolorful/";
             isSnowParticleEffect = false;
 		}
 
