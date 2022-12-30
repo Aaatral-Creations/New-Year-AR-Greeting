@@ -4,6 +4,11 @@
 	<title>Happy New Year 2023 - Aatral</title>
 
 	<meta charset="utf-8">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://celebrations.aatral.io/">
+	<meta property="og:title" content="Happy New Year 2023 - Aatral">
+	<meta property="og:description" content="Happy New Yeay 2023! Have a sparkling New Year! - Team Aatral">
+	<meta property="og:image" content="./textures/preview.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<link type="text/css" rel="stylesheet" href="main.css">
 	<link rel="shortcut icon" type="image/jpg" href="textures/aatral_logo_square.jpg" />
@@ -55,7 +60,7 @@
 			fontWeight = 'bold'; 
 
 		const height = 0.0001,
-			size = 0.25,
+			size = 0.195,
 			hover = 0,
 			curveSegments = 4,
 			bevelThickness = 0.04,
@@ -213,6 +218,10 @@
 				}
 			}
 
+            for (let i = 0; i < 6; i++) {
+                AddExtraBalloons(i + "e");
+            }
+
 			renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setSize(window.innerWidth, window.innerHeight);
@@ -323,6 +332,31 @@
 						group.add(newObject);
 					});
 			}
+		}
+
+        function AddExtraBalloons(i) {
+            const materialFbx = new THREE.MeshStandardMaterial({
+                color: ColorPalatte.other_color[1],
+                opacity: 0.9,
+                transparent: true,
+                roughness: 0.5,
+                metalness: 0.1
+            });
+
+            fbxLoader.load('models/newyear/fbx/balloon/Balloon.fbx', function (object) {
+                const newObject = balloon.clone();
+                newObject.position.x = Math.random() * 4 - 2;
+                newObject.position.y = Math.random() * 4 - 2;
+                newObject.position.z = Math.random() * 4 - 2;
+
+                newObject.rotation.x = Math.random() * 2 * Math.PI;
+                newObject.rotation.y = Math.random() * 2 * Math.PI;
+
+                newObject.scale.setScalar(getRandomFloat(0.2, 0.7));
+                newObject.children[1].material = materialFbx;
+                newObject.name = i + "_ball_obj";
+                group.add(newObject);
+            });
 		}
 
 		function onWindowResize() {
@@ -565,7 +599,7 @@
 			const particleSystems = [];
 
 			// create the vertices and add store them in our vertices array
-			for (let i = 0; i < 10000; i++) {
+			for (let i = 0; i < 5500; i++) {
 				const x = Math.random() * 2000 - 1000; // generate random number between -1000 to 1000
 				const y = Math.random() * 2000 - 1000;
 				const z = Math.random() * 2000 - 1000;
