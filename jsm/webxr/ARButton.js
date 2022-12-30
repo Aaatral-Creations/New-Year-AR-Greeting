@@ -78,7 +78,7 @@ class ARButton {
 			};
 
 			button.onmouseleave = function () {
-				button.style.opacity = '0.65';
+				button.style.opacity = '0.7';
 			};
 
 			button.onclick = function () {
@@ -96,7 +96,7 @@ class ARButton {
 			button.style.left = 'calc(50% - 75px)';
 			button.style.width = '150px';
 			button.style.background = 'rgba(1,1,1,0.1)';
-			button.style.opacity = '0.5';
+			button.style.opacity = '0.25';
 
 			button.onmouseenter = null;
 			button.onmouseleave = null;
@@ -121,7 +121,7 @@ class ARButton {
 		function stylizeElement(element) {
 
 			element.style.position = 'absolute';
-			element.style.bottom = '20px';
+			element.style.bottom = 'calc(30% - 50px)';
 			element.style.padding = '12px 6px';
 			element.style.border = '1px solid #fff';
 			element.style.borderRadius = '4px';
