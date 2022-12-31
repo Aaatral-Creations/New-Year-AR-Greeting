@@ -208,7 +208,7 @@
 			];
 
 			for (let i = 0; i < 100; i++) {
-				if (i % 3 == 0) {
+				if (i % 3 !== 0) {
 
 					const geometry = geometries[Math.floor(Math.random() * geometries.length)];
 					const material = new THREE.MeshStandardMaterial({
@@ -297,9 +297,9 @@
 
 					fbxLoader.load('models/newyear/fbx/balloon/Balloon.fbx', function (object) {
 						const newObject = balloon.clone();
-						newObject.position.x = Math.random() * 8 - 4;
-						newObject.position.y = Math.random() * 8 - 4;
-						newObject.position.z = Math.random() * 8 - 4;
+						newObject.position.x = Math.random() * 6 - 3;
+						newObject.position.y = Math.random() * 6 - 3;
+						newObject.position.z = Math.random() * 6 - 3;
 
 						newObject.rotation.x = Math.random() * 2 * Math.PI;
 						newObject.rotation.y = Math.random() * 2 * Math.PI;
